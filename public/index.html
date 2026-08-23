@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>네이버-챗GPT 연동 사이트</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; max-width: 720px; margin: 60px auto; padding: 0 20px; line-height: 1.7; color: #222; }
+  h1 { font-size: 22px; }
+  code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
+  .endpoint { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 16px; margin: 16px 0; }
+  .endpoint h2 { margin: 0 0 8px; font-size: 16px; }
+  a { color: #0a7cff; }
+</style>
+</head>
+<body>
+  <h1>네이버 ↔ 챗GPT 연동 사이트</h1>
+  <p>이 사이트는 챗GPT가 네이버 검색/블로그 콘텐츠/구글 트렌드를 조회할 수 있도록 해주는 중간 API입니다.</p>
+
+  <div class="endpoint">
+    <h2>1. 네이버 카테고리 검색</h2>
+    <code>GET /api/search?query=검색어&amp;type=blog</code>
+    <p>type: blog, news, book, encyc, cafearticle, kin, local, webkr, image, shop, doc, movie</p>
+  </div>
+
+  <div class="endpoint">
+    <h2>2. 네이버 URL 콘텐츠 확인</h2>
+    <code>GET /api/content?url=https://blog.naver.com/아이디/글번호</code>
+  </div>
+
+  <div class="endpoint">
+    <h2>3. 구글 트렌드 조회 (무료)</h2>
+    <code>GET /api/trends?keyword=검색어&amp;geo=KR</code>
+  </div>
+
+  <p>챗GPT Custom GPT의 Actions에 연결하려면 <a href="/openapi.yaml">openapi.yaml</a>을 스키마로 등록하세요.</p>
+</body>
+</html>
