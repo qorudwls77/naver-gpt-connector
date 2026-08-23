@@ -1,0 +1,13 @@
+{
+  "name": "naver-gpt-connector",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ChatGPT가 네이버 검색/콘텐츠/구글 트렌드를 조회할 수 있게 해주는 중간 API 서버 (Vercel Serverless Functions)",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "google-trends-api": "^4.9.2"
+  }
+}
