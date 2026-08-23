@@ -6,7 +6,7 @@ info:
     조회할 수 있도록 해주는 중간 API입니다.
   version: "1.0.0"
 servers:
-  - url: https://REPLACE_WITH_YOUR_DOMAIN.vercel.app
+  - url: https://naver-gpt-connector.vercel.app
 paths:
   /api/search:
     get:
