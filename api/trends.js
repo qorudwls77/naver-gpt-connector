@@ -23,12 +23,28 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: "keyword 파라미터가 필요합니다." });
   }
 
+  // google-trends-api 라이브러리는 "timeframe" 문자열을 받지 않고
+  // startTime/endTime(Date 객체)만 받으므로 여기서 변환해줍니다.
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const TIMEFRAME_DAYS = {
+    "now 1-d": 1,
+    "now 7-d": 7,
+    "today 1-m": 30,
+    "today 3-m": 90,
+    "today 12-m": 365,
+    "today 5-y": 365 * 5
+  };
+  const days = TIMEFRAME_DAYS[timeframe] || 90;
+  const endTime = new Date();
+  const startTime = new Date(endTime.getTime() - days * DAY_MS);
+
   try {
     const raw = await googleTrends.interestOverTime({
       keyword,
       geo,
       hl: "ko",
-      timeframe // 예: "now 7-d", "today 1-m", "today 3-m", "today 12-m"
+      startTime,
+      endTime
     });
 
     const parsed = JSON.parse(raw);
