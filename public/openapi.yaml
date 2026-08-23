@@ -123,7 +123,7 @@ paths:
           schema:
             type: string
             default: "today 3-m"
-          description: '조회 기간 (예: "now 7-d", "today 1-m", "today 3-m", "today 12-m")'
+          description: '조회 기간 (now 1-d, now 7-d, today 1-m, today 3-m, today 12-m, today 5-y 중 하나)'
       responses:
         "200":
           description: 트렌드 결과
