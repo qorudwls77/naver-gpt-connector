@@ -39,7 +39,10 @@ module.exports = async (req, res) => {
     });
   }
 
-  const url = new URL(`https://openapi.naver.com/v1/search/${type}.json`);
+  // 네이버 검색 API는 기존 openapi.naver.com 방식에서
+  // NAVER API HUB(NCP)로 이관되었습니다. (2027-06-30까지는 구방식도 병행 지원되지만
+  // 새로 발급받은 키는 신방식 전용이라 신방식 엔드포인트/헤더를 사용합니다.)
+  const url = new URL(`https://naverapihub.apigw.ntruss.com/search/v1/${type}`);
   url.searchParams.set("query", query);
   url.searchParams.set("display", display);
   url.searchParams.set("start", start);
@@ -48,10 +51,6 @@ module.exports = async (req, res) => {
   try {
     const response = await fetch(url.toString(), {
       headers: {
-        // 구(舊) 네이버 오픈API 검색 인증 헤더
-        "X-Naver-Client-Id": clientId,
-        "X-Naver-Client-Secret": clientSecret,
-        // 신규 NCP API Gateway 스타일 헤더 (계정에 따라 이 방식이 필요할 수 있어 함께 전송)
         "X-NCP-APIGW-API-KEY-ID": clientId,
         "X-NCP-APIGW-API-KEY": clientSecret
       }
