@@ -2,8 +2,8 @@ openapi: 3.1.0
 info:
   title: 네이버-챗GPT 연동 API
   description: >
-    챗GPT가 네이버 검색(카테고리별), 네이버 URL 콘텐츠 확인, 구글 트렌드(무료)를
-    조회할 수 있도록 해주는 중간 API입니다.
+    챗GPT가 네이버 검색(카테고리별), 네이버쇼핑 순위 조회, 네이버 URL 콘텐츠 확인,
+    구글 트렌드(무료)를 조회할 수 있도록 해주는 중간 API입니다.
   version: "1.0.0"
 servers:
   - url: https://naver-gpt-connector.vercel.app
@@ -98,6 +98,94 @@ paths:
                     type: string
                   truncated:
                     type: boolean
+
+  /api/shopping-rank:
+    get:
+      operationId: getNaverShoppingRank
+      summary: 네이버쇼핑 검색 결과에서 특정 스토어/상품의 노출 순위를 조회합니다
+      description: >
+        query(검색 키워드)로 네이버쇼핑을 검색해서, targetMallName(스토어명) /
+        targetProductId(상품ID) / targetKeyword(상품명 키워드) 중 지정한 조건에
+        맞는 상품이 몇 위에 노출되는지 maxRank 위까지 훑어서 찾아줍니다.
+        세 조건 중 최소 하나는 반드시 지정해야 하며, 여러 개를 같이 주면 모두
+        만족하는 상품만 매칭됩니다.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+          description: 순위를 확인할 검색 키워드
+        - name: targetMallName
+          in: query
+          required: false
+          schema:
+            type: string
+          description: 순위를 찾을 스토어(쇼핑몰) 이름 (부분 일치)
+        - name: targetProductId
+          in: query
+          required: false
+          schema:
+            type: string
+          description: 네이버쇼핑 상품 고유 ID (가장 정확한 매칭 방법)
+        - name: targetKeyword
+          in: query
+          required: false
+          schema:
+            type: string
+          description: 상품명(제목)에 포함되어야 하는 단어 (부분 일치)
+        - name: maxRank
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+          description: 몇 위까지 확인할지 (최대 1000)
+        - name: maxMatches
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+          description: 최대 몇 개까지 매칭 결과를 반환할지
+      responses:
+        "200":
+          description: 순위 조회 결과
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  query:
+                    type: string
+                  maxRank:
+                    type: integer
+                  checkedUpToRank:
+                    type: integer
+                  totalAvailable:
+                    type: integer
+                  found:
+                    type: boolean
+                  bestRank:
+                    type: integer
+                    nullable: true
+                  matches:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        rank:
+                          type: integer
+                        title:
+                          type: string
+                        mallName:
+                          type: string
+                        productId:
+                          type: string
+                        lprice:
+                          type: string
+                        link:
+                          type: string
 
   /api/trends:
     get:
