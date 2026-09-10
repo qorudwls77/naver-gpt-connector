@@ -5,6 +5,7 @@
 ## 엔드포인트
 
 - `GET /api/search?query=검색어&type=blog` — 네이버 카테고리 검색 (blog, news, shop, kin, book, encyc, cafearticle, local, webkr, image, doc, movie)
+- `GET /api/shopping-rank?query=검색어&targetMallName=스토어명` — 네이버쇼핑 검색 결과에서 특정 스토어/상품(targetMallName / targetProductId / targetKeyword)이 몇 위에 노출되는지 조회 (maxRank까지 자동으로 여러 페이지를 훑음)
 - `GET /api/content?url=...` — 네이버 URL(주로 블로그) 본문 텍스트 확인
 - `GET /api/trends?keyword=검색어&geo=KR` — 구글 트렌드 관심도 추이 (무료 비공식 방식)
 
