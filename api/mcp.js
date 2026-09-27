@@ -163,7 +163,9 @@ const tools = [
     }
   }
 ];
-
+for (const tool of tools) {
+  tool.annotations = { readOnlyHint: true, destructiveHint: false, openWorldHint: true };
+}
 function params(args) {
   const p = new URLSearchParams();
 
